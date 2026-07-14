@@ -32,7 +32,7 @@ if not logger.handlers:
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 SRC_DIR = PROJECT_ROOT / "src"
 
-INGESTION_SCRIPT = SRC_DIR / "atmosync" / "ingestion" / "load_raw.py"
+VALIDATION_SCRIPT = SRC_DIR / "atmosync" / "validation" / "run_validations.py"
 TRANSFORM_SCRIPT = SRC_DIR / "atmosync" / "transform" / "run_transformations.py"
 
 
@@ -81,7 +81,7 @@ def run_pipeline() -> None:
 
     run_step("Ingestion", INGESTION_SCRIPT)
     run_step("Transformation", TRANSFORM_SCRIPT)
-
+    run_step("Validation", VALIDATION_SCRIPT)
     logger.info("=== AtmoSync pipeline run finished successfully ===")
 
 
