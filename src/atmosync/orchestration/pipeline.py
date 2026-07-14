@@ -25,17 +25,16 @@ if not logger.handlers:
     handler.setFormatter(formatter)
     logger.addHandler(handler)
 
-# --- Paths -----------------------------------------------------------------
+# --- Paths ---------------------------------------------------------
 
 # This file lives at src/atmosync/orchestration/pipeline.py, so the
 # project root is three levels up.
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 SRC_DIR = PROJECT_ROOT / "src"
 
-VALIDATION_SCRIPT = SRC_DIR / "atmosync" / "validation" / "run_validations.py"
+INGESTION_SCRIPT = SRC_DIR / "atmosync" / "ingestion" / "load_raw.py"
 TRANSFORM_SCRIPT = SRC_DIR / "atmosync" / "transform" / "run_transformations.py"
-
-
+VALIDATION_SCRIPT = SRC_DIR / "atmosync" / "validation" / "run_validations.py"
 def run_step(step_name: str, script_path: Path) -> None:
     """
     Run a single pipeline step in its own subprocess.
