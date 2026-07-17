@@ -34,9 +34,28 @@ st.markdown(
 )
 
 st.sidebar.header("Filters & Controls")
-st.sidebar.write("Filters coming soon...")
+threshold = st.sidebar.slider(
+    "Minimum Anomaly %", min_value=0.0, max_value=100.0, value=0.0, step=1.0
+)
 
 df = load_data()
+filtered_df = df[df["anomaly_pct"] >= threshold]
 
-st.subheader("Raw Data View")
-st.dataframe(df, use_container_width=True)
+st.subheader("Key Performance Indicators (KPIs)")
+
+total_containers = len(filtered_df)
+high_risk_containers = int(filtered_df["arbitrage_flag"].sum()) if not filtered_df.empty else 0
+avg_anomaly_pct = round(filtered_df["anomaly_pct"].mean(), 2) if not filtered_df.empty else 0.0
+
+col1, col2, col3 = st.columns(3)
+col1.metric("Total Containers", total_containers)
+col2.metric("High Risk Containers", high_risk_containers)
+col3.metric("Avg Anomaly %", f"{avg_anomaly_pct}%")
+
+st.subheader("Anomaly Percentage by Container")
+
+if not filtered_df.empty:
+    chart_df = filtered_df.set_index("container_id")[["anomaly_pct"]]
+    st.bar_chart(chart_df)
+else:
+    st.write("No containers match the current filter.")
