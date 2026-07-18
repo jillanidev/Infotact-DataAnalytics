@@ -59,3 +59,11 @@ if not filtered_df.empty:
     st.bar_chart(chart_df)
 else:
     st.write("No containers match the current filter.")
+
+st.subheader("Actionable Insights: At-Risk Containers")
+
+action_df = filtered_df[filtered_df["arbitrage_flag"] == True].sort_values(
+    "anomaly_pct", ascending=False
+)
+
+st.dataframe(action_df, use_container_width=True, hide_index=True)
