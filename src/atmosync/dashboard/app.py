@@ -67,3 +67,12 @@ action_df = filtered_df[filtered_df["arbitrage_flag"] == True].sort_values(
 )
 
 st.dataframe(action_df, use_container_width=True, hide_index=True)
+
+csv = action_df.to_csv(index=False).encode("utf-8")
+
+st.download_button(
+    label="Download At-Risk Containers (CSV)",
+    data=csv,
+    file_name="at_risk_containers.csv",
+    mime="text/csv",
+)
