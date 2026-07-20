@@ -60,6 +60,14 @@ if not filtered_df.empty:
 else:
     st.write("No containers match the current filter.")
 
+st.subheader("Anomaly Distribution (Area)")
+
+if not filtered_df.empty:
+    area_chart_df = filtered_df.set_index("container_id")[["anomaly_pct"]]
+    st.area_chart(area_chart_df)
+else:
+    st.write("No containers match the current filter.")
+
 st.subheader("Actionable Insights: At-Risk Containers")
 
 action_df = filtered_df[filtered_df["arbitrage_flag"] == True].sort_values(
